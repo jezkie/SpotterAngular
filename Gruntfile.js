@@ -28,6 +28,12 @@ module.exports = function (grunt) {
   // Define the configuration for all the tasks
   grunt.initConfig({
 
+    open: {
+        dev: {
+            url: 'http://localhost:<%= connect.options.port %>',
+            app: 'Chrome'
+        }
+    },
     // Project settings
     yeoman: appConfig,
 
@@ -77,7 +83,7 @@ module.exports = function (grunt) {
       },
       livereload: {
         options: {
-          open: true,
+          open: false,
           middleware: function (connect) {
             return [
               connect.static('.tmp'),
@@ -420,6 +426,7 @@ module.exports = function (grunt) {
       'concurrent:server',
       'autoprefixer:server',
       'connect:livereload',
+      'open:dev', //open chrome instead of default browser
       'watch'
     ]);
   });
