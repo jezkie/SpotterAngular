@@ -1,17 +1,35 @@
-{[ "squat":{
-  "name" : "Squat",
-  "rest": 90
-}, "bench":{
-  "name" : "Bench Press",
-  "rest": 90
-}, "row":{
-  "name" : "Row",
-  "rest": 90
-}, "overhead_press":{
-  "name" : "Overhead Press",
-  "rest": 90
-}, "deadlift":{
-  "name" : "Deadlift",
-  "rest": 90
-} ]
+{
+  "exercises": {
+    "squat": {
+      "name": "Squat",
+      "rest": 90
+    },
+    "bench": {
+      "name": "Bench Press",
+      "rest": 90
+    },
+    "row": {
+      "name": "Row",
+      "rest": 90
+    },
+    "overhead_press": {
+      "name": "Overhead Press",
+      "rest": 90
+    },
+    "deadlift": {
+      "name": "Deadlift",
+      "rest": 90
+    }
+  }
 }
+
+/**
+to add exercise to Firebase:
+  {
+    "squat": {
+      "name": "Squat",
+      "rest": 90
+    }
+  }
+
+*/
