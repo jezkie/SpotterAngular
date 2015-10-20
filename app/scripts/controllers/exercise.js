@@ -1,11 +1,21 @@
 (function() {
   'use strict';
 
-  var app = angular.module('spot');
+  angular.module('spot')
+    .controller('ExerciseCtrl', ExerciseCtrl);
 
-  var ExerciseCtrl = function($scope, $stateParams, $interval) {
+  function ExerciseCtrl($scope, $stateParams, $interval) {
+    var countDownInterval = null;
 
-    var decrementCountdown = function() {
+    $scope.name = $stateParams.exercise;
+    $scope.countdown = 90;
+    $scope.finishSet = finishSet;
+
+    startCountdown();
+
+    // Internal Functions
+
+    function decrementCountdown() {
       $scope.countdown -= 1;
       if ($scope.countdown < 1) {
         if (countDownInterval) {
@@ -13,22 +23,16 @@
           $scope.countdown = 0;
         }
       }
-    };
+    }
 
-    var countDownInterval = null;
-    var startCountdown = function() {
+    function startCountdown() {
       countDownInterval = $interval(decrementCountdown, 1000);
-    };
+    }
 
-    $scope.finishSet = function() {
+    function finishSet() {
       $scope.countdown = $stateParams.rest;
       startCountdown();
-    };
+    }
+  }
 
-    $scope.name = $stateParams.exercise;
-    $scope.countdown = 0;
-
-  };
-
-  app.controller('ExerciseCtrl', ExerciseCtrl);
 })();

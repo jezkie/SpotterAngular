@@ -1,42 +1,45 @@
 (function() {
   'use strict';
-    var exerciseFactory = function($firebaseArray, $firebaseObject, $firebase) {
-    var url = 'https://personalspotter.firebaseio.com/data/exercises';
-    var ref = new Firebase(url);
+  angular
+    .module('spot')
+    .service('ExerciseService', ExerciseService);
 
-    var getExerciseById = function(id) {
+  var FIREBASE_URL = 'https://personalspotter.firebaseio.com/data/exercises';
+
+  function ExerciseService($firebaseArray, $firebaseObject) {
+    var self = this;
+    var ref = new Firebase(FIREBASE_URL);
+
+    self.getExerciseById = getExerciseById;
+    self.getExercises = getExercises;
+    self.save = save;
+    self.remove = remove;
+
+    // Internal functions
+
+    function getExerciseById(id) {
       var recordRef = new Firebase(url + '/' + id);
       return $firebaseObject(recordRef);
-    };
+    }
 
-    var getExercises = function() {
+    function getExercises() {
       return $firebaseArray(ref);
-    };
+    }
 
-    var save = function(toSaveObj){
+    function save(toSaveObj) {
       toSaveObj.$save().then(function(ref) {
         ref.key() === toSaveObj.$id; // true
       }, onError);
-    };
+    }
 
-    var remove = function(id){
+    function remove(id) {
       var toRemoveObj = getExerciseById(id);
-      toRemoveObj.$remove().then(function(ref) {}, onError);
-    };
+      toRemoveObj.$remove().then(function(ref) {
+      }, onError);
+    }
 
-    var onError = function(err) {
+    function onError(err) {
       console.log("Error:", err);
-    };
-
-    return {
-      getExerciseById: getExerciseById,
-      getExercises: getExercises,
-      save: save,
-      remove: remove
-    };
-
-  };
-
-  var app = angular.module('spot');
-  app.factory('exerciseFactory', exerciseFactory);
+    }
+  }
 })();

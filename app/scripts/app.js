@@ -19,16 +19,17 @@ angular
     'firebase',
     'ui.router'
   ])
-  .config(function($stateProvider, $urlRouterProvider) {
+  .config(mainConfig);
 
-    $urlRouterProvider.otherwise('/home');
-    $stateProvider
-      .state('home', {
+function mainConfig($stateProvider, $urlRouterProvider) {
+  $urlRouterProvider.otherwise('/home');
+  $stateProvider
+    .state('home', {
       url: '/home',
       templateUrl: 'views/home.html',
       controller: 'HomeCtrl'
     })
-      .state('exercise', {
+    .state('exercise', {
       url: '/exercise',
       params: {
         exercise: null,
@@ -37,10 +38,9 @@ angular
       templateUrl: 'views/exercise.html',
       controller: 'ExerciseCtrl'
     })
-
-      .state('about', {
+    .state('about', {
       url: '/about',
       templateUrl: 'views/about.html',
       controller: 'AboutCtrl'
     });
-  });
+}
