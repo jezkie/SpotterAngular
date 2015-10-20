@@ -3,7 +3,7 @@
 
   var app = angular.module('spot');
 
-  var HomeCtrl = function($scope, exerciseFactory) {
+  var HomeCtrl = function($scope, ExerciseService) {
 
     $scope.data = {
       name: null,
@@ -34,16 +34,16 @@
       console.log('Old object', oldObj);
     };
 
-    $scope.exercises = exerciseFactory.getExercises();
+    $scope.exercises = ExerciseService.getExercises();
 
     $scope.remove = function(id) {
-      exerciseFactory.remove(id);
+      ExerciseService.remove(id);
     };
 
     $scope.submit = function() {
       if (recId) {
-        var toSaveObj = exerciseFactory.getExerciseById(recId);
-        exerciseFactory.save(updateModel(toSaveObj, $scope.data));
+        var toSaveObj = ExerciseService.getExerciseById(recId);
+        ExerciseService.save(updateModel(toSaveObj, $scope.data));
         recId = null;
       } else {
         $scope.exercises.$add($scope.data);
