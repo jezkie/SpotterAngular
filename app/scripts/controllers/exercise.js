@@ -8,10 +8,8 @@
     var countDownInterval = null;
 
     $scope.name = $stateParams.exercise;
-    $scope.countdown = 90;
+    $scope.countdown = 0;
     $scope.finishSet = finishSet;
-
-    startCountdown();
 
     // Internal Functions
 
