@@ -1,9 +1,10 @@
 (function() {
   'use strict';
 
-  var app = angular.module('spot');
+  angular.module('spot')
+    .controller('HomeCtrl', HomeCtrl);
 
-  var HomeCtrl = function($scope, ExerciseService) {
+  function HomeCtrl($scope, ExerciseService) {
 
     $scope.data = {
       name: null,
@@ -31,7 +32,6 @@
       recId = id;
       var oldObj = $scope.exercises.$getRecord(id);
       updateForm(oldObj);
-      console.log('Old object', oldObj);
     };
 
     $scope.exercises = ExerciseService.getExercises();
@@ -42,17 +42,17 @@
 
     $scope.submit = function() {
       if (recId) {
-        var toSaveObj = ExerciseService.getExerciseById(recId);
-        ExerciseService.save(updateModel(toSaveObj, $scope.data));
+        var toSaveObj = $scope.exercises.$getRecord(recId);
+        $scope.exercises.$save(updateModel(toSaveObj, $scope.data));
         recId = null;
       } else {
-        $scope.exercises.$add($scope.data);
+        var ref = ExerciseService.rootRef();
+        ref.child('exercises/' + $scope.data.name)
+          .set($scope.data);
       }
       clearForm();
     }
 
   };
-
-  app.controller('HomeCtrl', HomeCtrl);
 
 })();

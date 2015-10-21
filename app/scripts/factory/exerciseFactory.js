@@ -4,7 +4,7 @@
     .module('spot')
     .service('ExerciseService', ExerciseService);
 
-  var FIREBASE_URL = 'https://personalspotter.firebaseio.com/data/exercises';
+  var FIREBASE_URL = 'https://myspotter.firebaseio.com';
 
   function ExerciseService($firebaseArray, $firebaseObject) {
     var self = this;
@@ -16,30 +16,26 @@
     self.remove = remove;
 
     // Internal functions
-
     function getExerciseById(id) {
-      var recordRef = new Firebase(url + '/' + id);
-      return $firebaseObject(recordRef);
+      return $firebaseObject(ref.child('exercises').child(id));
     }
 
     function getExercises() {
-      return $firebaseArray(ref);
+      return $firebaseArray(ref.child('exercises'));
     }
 
-    function save(toSaveObj) {
-      toSaveObj.$save().then(function(ref) {
-        ref.key() === toSaveObj.$id; // true
-      }, onError);
-    }
-
-    function remove(id) {
+    function remove(id){
       var toRemoveObj = getExerciseById(id);
-      toRemoveObj.$remove().then(function(ref) {
-      }, onError);
+      toRemoveObj.$remove().then(function(ref) {}, onError);
     }
 
-    function onError(err) {
+    var onError = function(err) {
       console.log("Error:", err);
     }
+
+    function rootRef(){
+      return ref;
+    }
+
   }
 })();
